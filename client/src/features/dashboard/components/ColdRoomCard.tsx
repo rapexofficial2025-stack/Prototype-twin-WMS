@@ -5,8 +5,9 @@ import type { ColdRoom } from '@/features/dashboard/types'
 import { WarehouseMiniMap } from './WarehouseMiniMap'
 
 export function ColdRoomCard({ room }: { room: ColdRoom }) {
-  const navigate = useNavigate(); const isFirstRoom = room.id === 'room-1'
-  return <motion.article layout whileHover={{ y: -4 }} whileTap={{ scale: 0.985 }} transition={{ type: 'spring', stiffness: 420, damping: 24 }} onClick={() => isFirstRoom && navigate('/warehouse/room-1')} className={`rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md ${isFirstRoom ? 'cursor-pointer' : ''}`}>
+  const navigate = useNavigate()
+  const roomNumber = Number(room.id.replace('room-', ''))
+  return <motion.article layout whileHover={{ y: -4 }} whileTap={{ scale: 0.985 }} transition={{ type: 'spring', stiffness: 420, damping: 24 }} onClick={() => navigate(`/warehouse/room/${roomNumber}`)} className="cursor-pointer rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
     <div className="flex items-start justify-between"><div><p className="text-xs font-medium uppercase tracking-wide text-slate-500">{room.name}</p><div className="mt-2 flex items-center gap-1.5"><ThermometerSnowflake className="size-4 text-blue-600" /><span className="text-xl font-semibold text-slate-900">{room.temperature.toFixed(1)}°C</span></div></div><span className="rounded-md bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-700">{room.occupancy}% full</span></div>
     <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-blue-600" style={{ width: `${room.occupancy}%` }} /></div>
     <div className="mt-4 grid grid-cols-2 gap-3"><Metric icon={Box} label="Occupied" value={room.occupiedLocations} /><Metric icon={Box} label="Available" value={room.availableLocations} /></div>
