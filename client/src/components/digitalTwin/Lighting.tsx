@@ -1,0 +1,1 @@
+export function Lighting() { return <><ambientLight intensity={1.15} /><directionalLight position={[8, 22, 24]} intensity={2.1} castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048} shadow-camera-far={100} /><directionalLight position={[-10, 15, -20]} intensity={0.7} /></> }

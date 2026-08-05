@@ -1,0 +1,2 @@
+import { Text } from '@react-three/drei'
+export function Evaporator() { return <group position={[0, 12.4, -8.8]}><mesh castShadow><boxGeometry args={[8.4, 3.5, 1.1]} /><meshStandardMaterial color="#e2e8f0" metalness={0.2} roughness={0.55} /></mesh>{[-2.5, 0, 2.5].map((x) => <mesh key={x} position={[x, 0, 0.58]} rotation={[Math.PI / 2, 0, 0]}><cylinderGeometry args={[1.02, 1.02, 0.08, 24]} /><meshStandardMaterial color="#64748b" metalness={0.35} roughness={0.45} /></mesh>)}<Text position={[0, 0, 0.61]} fontSize={0.38} color="#0f172a">EVAPORATOR</Text></group> }
