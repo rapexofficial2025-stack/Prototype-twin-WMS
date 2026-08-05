@@ -37,7 +37,7 @@ export function RoomDetailPage() {
               </button>
             ))}
           </div>
-          <button onClick={() => navigate('/digital-twin')} className="flex items-center gap-2 rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700">
+          <button onClick={() => navigate(`/digital-twin?room=${room}`)} className="flex items-center gap-2 rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700">
             <Box className="size-4" />3D Digital Twin
           </button>
         </div>
