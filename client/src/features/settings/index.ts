@@ -1,2 +1,1 @@
-/** Settings feature public API. */
-export {}
+export { SettingsPage } from './pages/SettingsPage'

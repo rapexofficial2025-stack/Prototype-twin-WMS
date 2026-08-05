@@ -29,6 +29,9 @@ class Tag(models.Model):
     quantity = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     avg_weight = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     total_weight = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    uom = models.CharField(max_length=20, default='box', help_text='Unit of measure, e.g. box, sack, carton.')
+    qty_per_layer = models.PositiveIntegerField(null=True, blank=True, help_text='Stock layering: units per layer. Captured once by the Checker on first scan, editable afterwards.')
+    last_scanned_at = models.DateTimeField(null=True, blank=True, help_text='Snapshot timestamp auto-captured at the moment a Checker/Operator confirms a scan update.')
     received_date = models.DateField(auto_now_add=True)
     status = models.CharField(max_length=16, choices=STATUS_CHOICES, default='in_storage')
 

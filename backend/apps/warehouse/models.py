@@ -25,6 +25,7 @@ class Location(models.Model):
     level = models.PositiveSmallIntegerField()
     depth = models.PositiveSmallIntegerField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='empty')
+    dock_number = models.CharField(max_length=20, blank=True, help_text='Staging dock this location is nearest to, shown to the Checker on scan.')
 
     class Meta:
         unique_together = ('room', 'side', 'column', 'level', 'depth')

@@ -8,13 +8,16 @@ import { OutboundListPage } from '@/features/outbound'
 import { TransferListPage } from '@/features/putaway'
 import { StockLedgerPage, StockAdjustmentPage } from '@/features/inventory'
 import { StockAgeingPage } from '@/features/reports'
+import { SettingsPage } from '@/features/settings'
 import { FeaturePlaceholderPage } from '@/components/common/FeaturePlaceholderPage'
 const DigitalTwinRoom = lazy(async () => ({ default: (await import('@/pages/DigitalTwinRoom')).DigitalTwinRoom }))
+const LoginPage = lazy(async () => ({ default: (await import('@/pages/LoginPage')).LoginPage }))
 
-const placeholders = ['warehouse', 'qrcenter', 'users', 'settings']
+const placeholders = ['warehouse', 'qrcenter', 'users']
 
 export function AppRouter() {
   return <HashRouter><Routes>
+    <Route path="login" element={<Suspense fallback={null}><LoginPage /></Suspense>} />
     <Route element={<EnterpriseLayout />}>
       <Route index element={<DashboardPage />} />
       <Route path="warehouse/room-1" element={<RoomDetailPage />} />
@@ -25,6 +28,7 @@ export function AppRouter() {
       <Route path="inventory" element={<StockLedgerPage />} />
       <Route path="inventory/adjustment" element={<StockAdjustmentPage />} />
       <Route path="reports" element={<StockAgeingPage />} />
+      <Route path="settings" element={<SettingsPage />} />
       {placeholders.map((feature) => <Route key={feature} path={feature} element={<FeaturePlaceholderPage feature={feature} />} />)}
     </Route>
     <Route path="*" element={<Navigate to="/" replace />} />

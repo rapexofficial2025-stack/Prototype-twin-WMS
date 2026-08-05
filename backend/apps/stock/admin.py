@@ -10,7 +10,7 @@ class BatchAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ['tag_no', 'batch', 'customer', 'location', 'quantity', 'status']
+    list_display = ['tag_no', 'batch', 'customer', 'location', 'quantity', 'uom', 'qty_per_layer', 'status']
     list_filter = ['status', 'location__room']
 
 

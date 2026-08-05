@@ -10,5 +10,5 @@ class RoomAdmin(admin.ModelAdmin):
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ['location_code', 'room', 'side', 'column', 'level', 'depth', 'status']
+    list_display = ['location_code', 'room', 'side', 'column', 'level', 'depth', 'status', 'dock_number']
     list_filter = ['room', 'status', 'side']
