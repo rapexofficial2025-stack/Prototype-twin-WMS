@@ -2,3 +2,10 @@ node_modules/
 dist/
 .env
 *.local
+
+# Python / Django backend
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.sqlite3
+backend/firebase-service-account.json
