@@ -1,2 +1,2 @@
-/** Reports feature public API. */
-export {}
+export { StockAgeingPage } from './pages/StockAgeingPage'
+export type { AgeingRow, AgeingBucket } from './types'

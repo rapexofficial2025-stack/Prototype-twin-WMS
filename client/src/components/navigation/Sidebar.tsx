@@ -1,14 +1,15 @@
-import { BarChart3, Boxes, Box, ChevronLeft, ChevronRight, ClipboardCheck, House, QrCode, Settings, Snowflake, Truck, Users, Warehouse } from 'lucide-react'
+import { BarChart3, Boxes, Box, ChevronLeft, ChevronRight, ClipboardCheck, House, ListChecks, QrCode, Settings, Snowflake, Truck, Users, Warehouse } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 
 const navigation = [
   { label: 'Dashboard', to: '/', icon: House }, { label: 'Cold Rooms', to: '/warehouse', icon: Snowflake },
-  { label: 'Warehouse', to: '/warehouse', icon: Warehouse }, { label: 'Inventory', to: '/inventory', icon: Boxes },
-  { label: 'Digital Twin', to: '/digital-twin', icon: Box },
-  { label: 'Receiving', to: '/receiving', icon: ClipboardCheck }, { label: 'Put-Away', to: '/putaway', icon: Truck },
-  { label: 'Outbound', to: '/outbound', icon: Truck }, { label: 'QR Center', to: '/qrcenter', icon: QrCode },
-  { label: 'Reports', to: '/reports', icon: BarChart3 }, { label: 'Users', to: '/users', icon: Users }, { label: 'Settings', to: '/settings', icon: Settings },
+  { label: 'Warehouse', to: '/warehouse', icon: Warehouse }, { label: 'Digital Twin', to: '/digital-twin', icon: Box },
+  { label: 'Receiving', to: '/receiving', icon: ClipboardCheck }, { label: 'Stock Transfer', to: '/putaway', icon: Truck },
+  { label: 'Withdrawal', to: '/outbound', icon: Truck },
+  { label: 'Stock Ledger', to: '/inventory', icon: Boxes }, { label: 'Stock Adjustment', to: '/inventory/adjustment', icon: ListChecks },
+  { label: 'QR Center', to: '/qrcenter', icon: QrCode },
+  { label: 'Stock Ageing', to: '/reports', icon: BarChart3 }, { label: 'Users', to: '/users', icon: Users }, { label: 'Settings', to: '/settings', icon: Settings },
 ]
 export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => void }) {
   return <aside className={cn('fixed inset-y-0 left-0 z-30 flex flex-col bg-slate-950 text-slate-300 transition-[width] duration-300', collapsed ? 'w-[76px]' : 'w-64')}>
