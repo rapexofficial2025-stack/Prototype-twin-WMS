@@ -3,7 +3,7 @@ import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { EnterpriseLayout } from '@/layouts/EnterpriseLayout'
 import { DashboardPage } from '@/features/dashboard'
 import { RoomDetailPage } from '@/features/warehouse'
-import { ReceivingListPage } from '@/features/receiving'
+import { ReceivingListPage, AddStockPage } from '@/features/receiving'
 import { OutboundListPage } from '@/features/outbound'
 import { TransferListPage } from '@/features/putaway'
 import { StockLedgerPage, StockAdjustmentPage } from '@/features/inventory'
@@ -23,6 +23,7 @@ export function AppRouter() {
       <Route path="warehouse/room-1" element={<RoomDetailPage />} />
       <Route path="digital-twin" element={<Suspense fallback={<div className="grid min-h-96 place-items-center text-sm text-slate-500">Loading Digital Twin…</div>}><DigitalTwinRoom /></Suspense>} />
       <Route path="receiving" element={<ReceivingListPage />} />
+      <Route path="receiving/add" element={<AddStockPage />} />
       <Route path="outbound" element={<OutboundListPage />} />
       <Route path="putaway" element={<TransferListPage />} />
       <Route path="inventory" element={<StockLedgerPage />} />

@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react'
-import { ChevronDown, ChevronRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { ChevronDown, ChevronRight, Plus } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { receivingDocs } from '@/features/receiving/services/receiving.mock'
 import type { DocStatus } from '@/features/receiving/types'
@@ -15,10 +16,15 @@ export function ReceivingListPage() {
 
   return (
     <section>
-      <div>
-        <p className="eyebrow">Storage</p>
-        <h1 className="page-title">Receiving List</h1>
-        <p className="mt-2 text-sm text-slate-500">All inbound stock acceptance transactions.</p>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="eyebrow">Storage</p>
+          <h1 className="page-title">Receiving List</h1>
+          <p className="mt-2 text-sm text-slate-500">All inbound stock acceptance transactions.</p>
+        </div>
+        <Link to="/receiving/add" className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
+          <Plus className="size-4" />Add Stock
+        </Link>
       </div>
       <Card className="mt-7 overflow-hidden">
         <table className="w-full text-left text-sm">
