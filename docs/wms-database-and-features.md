@@ -1,13 +1,24 @@
 # Frost WMS — Database Schema & Module Feature Spec
 
-Source: legacy Antarctica Cold Storage WMS screenshots/spec, adapted for Frost WMS
-(React + Xano/PostgreSQL backend, 3D Digital Twin replacing the old Storage Status map).
+Source: legacy Antarctica Cold Storage WMS screenshots/spec, adapted for Frost WMS.
+3D Digital Twin replaces the old 2D Storage Status map.
+
+**Stack (no Xano):**
+- **React + Vite** — frontend (this repo, `client/`)
+- **Django** — REST API + all business logic (receiving/withdrawal/transfer/adjustment
+  posting rules, ledger writes, ageing calculation, permissions)
+- **Supabase (Postgres)** — the actual database. Django's ORM connects to Supabase's
+  Postgres connection string like any other Postgres host; Supabase's own client-side
+  SDK/RLS is not used from the frontend — all writes go through Django.
+- **Firebase** — auth session/token handling and realtime notifications only (e.g. "2
+  rooms need attention" pushes, live occupancy ticks). No business data lives in
+  Firebase, matching the RAPEX rule that Firebase stays infra-only.
 
 Navigation groups: **Dashboard · Storage · Listing · Inquiry · Reports · Admin**
 
 ---
 
-## 1. Database Schema (PostgreSQL / Xano tables)
+## 1. Database Schema (PostgreSQL via Supabase, owned by Django models)
 
 ### Core Master Data
 
@@ -201,7 +212,7 @@ Navigation groups: **Dashboard · Storage · Listing · Inquiry · Reports · Ad
 - Live KPI tiles: Total Capacity, Occupancy %, Inbound Today, Outbound Today
 - "N rooms need attention" alert banner (threshold-driven, e.g. >90% full or blocked locations)
 - Cold Room Status cards → clicking opens the 3D Digital Twin for that room
-- Per-room live temp reading (feeds from Xano, later IoT sensor integration)
+- Per-room live temp reading (feeds from Django API, pushed live via Firebase; later IoT sensor integration)
 
 ### Storage → Stock Acceptance (Receiving)
 - Header form (customer, reference/batch/slip no., container info, charges, date range)
