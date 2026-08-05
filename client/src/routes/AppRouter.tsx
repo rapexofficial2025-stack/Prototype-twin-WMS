@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { EnterpriseLayout } from '@/layouts/EnterpriseLayout'
 import { DashboardPage } from '@/features/dashboard'
 import { RoomDetailPage } from '@/features/warehouse'
@@ -14,7 +14,7 @@ const DigitalTwinRoom = lazy(async () => ({ default: (await import('@/pages/Digi
 const placeholders = ['warehouse', 'qrcenter', 'users', 'settings']
 
 export function AppRouter() {
-  return <BrowserRouter><Routes>
+  return <HashRouter><Routes>
     <Route element={<EnterpriseLayout />}>
       <Route index element={<DashboardPage />} />
       <Route path="warehouse/room-1" element={<RoomDetailPage />} />
@@ -28,5 +28,5 @@ export function AppRouter() {
       {placeholders.map((feature) => <Route key={feature} path={feature} element={<FeaturePlaceholderPage feature={feature} />} />)}
     </Route>
     <Route path="*" element={<Navigate to="/" replace />} />
-  </Routes></BrowserRouter>
+  </Routes></HashRouter>
 }
