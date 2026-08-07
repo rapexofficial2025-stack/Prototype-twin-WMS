@@ -11,7 +11,7 @@ export function StockAgeingPage() {
       <div>
         <p className="eyebrow">Reports</p>
         <h1 className="page-title">Stock Ageing</h1>
-        <p className="mt-2 text-sm text-slate-500">FEFO ageing buckets by production date.</p>
+        <p className="mt-2 text-sm text-slate-400">FEFO ageing buckets by production date.</p>
       </div>
       <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         {buckets.map((bucket) => {
@@ -19,16 +19,16 @@ export function StockAgeingPage() {
           const totalQty = rows.reduce((sum, row) => sum + row.quantity, 0)
           return (
             <Card key={bucket} className="p-5">
-              <p className="text-xs font-medium text-slate-500">{bucketLabel[bucket]}</p>
-              <p className="mt-1 text-2xl font-semibold tracking-tight text-slate-900">{totalQty.toLocaleString()}</p>
-              <p className="mt-1 text-xs text-slate-400">{rows.length} line item{rows.length === 1 ? '' : 's'}</p>
+              <p className="text-xs font-medium text-slate-400">{bucketLabel[bucket]}</p>
+              <p className="mt-1 text-2xl font-semibold tracking-tight text-slate-50">{totalQty.toLocaleString()}</p>
+              <p className="mt-1 text-xs text-slate-500">{rows.length} line item{rows.length === 1 ? '' : 's'}</p>
             </Card>
           )
         })}
       </div>
       <Card className="mt-6 overflow-hidden">
         <table className="w-full text-left text-sm">
-          <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+          <thead className="bg-slate-900 text-xs uppercase tracking-wide text-slate-400">
             <tr>
               <th className="px-4 py-3">Customer</th>
               <th className="px-4 py-3">Item</th>
@@ -39,7 +39,7 @@ export function StockAgeingPage() {
           </thead>
           <tbody>
             {ageingRows.map((row) => (
-              <tr key={row.id} className="border-t border-slate-100 hover:bg-slate-50">
+              <tr key={row.id} className="border-t border-slate-700 hover:bg-slate-700">
                 <td className="px-4 py-3">{row.customerName}</td>
                 <td className="px-4 py-3">{row.itemName}</td>
                 <td className="px-4 py-3">{bucketLabel[row.bucket]}</td>

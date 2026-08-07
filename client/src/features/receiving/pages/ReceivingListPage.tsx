@@ -6,9 +6,9 @@ import { receivingDocs } from '@/features/receiving/services/receiving.mock'
 import type { DocStatus } from '@/features/receiving/types'
 
 const statusTone: Record<DocStatus, string> = {
-  draft: 'bg-slate-100 text-slate-600',
-  saved: 'bg-amber-50 text-amber-700',
-  posted: 'bg-emerald-50 text-emerald-700',
+  draft: 'bg-slate-700 text-slate-300',
+  saved: 'bg-amber-500/15 text-amber-300',
+  posted: 'bg-emerald-500/15 text-emerald-300',
 }
 
 export function ReceivingListPage() {
@@ -20,15 +20,15 @@ export function ReceivingListPage() {
         <div>
           <p className="eyebrow">Storage</p>
           <h1 className="page-title">Receiving List</h1>
-          <p className="mt-2 text-sm text-slate-500">All inbound stock acceptance transactions.</p>
+          <p className="mt-2 text-sm text-slate-400">All inbound stock acceptance transactions.</p>
         </div>
-        <Link to="/receiving/add" className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
+        <Link to="/receiving/add" className="flex items-center gap-2 rounded-lg bg-sky-500 px-4 py-2 text-sm font-medium text-white hover:bg-sky-600">
           <Plus className="size-4" />Add Stock
         </Link>
       </div>
       <Card className="mt-7 overflow-hidden">
         <table className="w-full text-left text-sm">
-          <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+          <thead className="bg-slate-900 text-xs uppercase tracking-wide text-slate-400">
             <tr>
               <th className="w-9" />
               <th className="px-4 py-3">Date</th>
@@ -45,10 +45,10 @@ export function ReceivingListPage() {
               const isOpen = expanded === doc.id
               return (
                 <Fragment key={doc.id}>
-                  <tr onClick={() => setExpanded(isOpen ? null : doc.id)} className="cursor-pointer border-t border-slate-100 hover:bg-slate-50">
-                    <td className="px-4 py-3 text-slate-400">{isOpen ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}</td>
+                  <tr onClick={() => setExpanded(isOpen ? null : doc.id)} className="cursor-pointer border-t border-slate-700 hover:bg-slate-700">
+                    <td className="px-4 py-3 text-slate-500">{isOpen ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}</td>
                     <td className="px-4 py-3">{doc.dateTimeFrom.slice(0, 10)}</td>
-                    <td className="px-4 py-3 font-medium text-slate-900">{doc.slipNumber}</td>
+                    <td className="px-4 py-3 font-medium text-slate-50">{doc.slipNumber}</td>
                     <td className="px-4 py-3">{doc.referenceNo}</td>
                     <td className="px-4 py-3">{doc.customerName}</td>
                     <td className="px-4 py-3 text-right">{doc.totalQuantity.toLocaleString()}</td>
@@ -56,10 +56,10 @@ export function ReceivingListPage() {
                     <td className="px-4 py-3"><span className={`rounded-full px-2.5 py-1 text-xs font-medium capitalize ${statusTone[doc.status]}`}>{doc.status}</span></td>
                   </tr>
                   {isOpen && (
-                    <tr className="border-t border-slate-100 bg-slate-50/60">
+                    <tr className="border-t border-slate-700 bg-slate-800/60">
                       <td colSpan={8} className="px-4 py-3">
                         <table className="w-full text-xs">
-                          <thead className="text-slate-500">
+                          <thead className="text-slate-400">
                             <tr>
                               <th className="px-2 py-1 text-left">Item</th>
                               <th className="px-2 py-1 text-left">Batch</th>
@@ -72,7 +72,7 @@ export function ReceivingListPage() {
                           </thead>
                           <tbody>
                             {doc.lines.map((line) => (
-                              <tr key={line.id} className="border-t border-slate-200">
+                              <tr key={line.id} className="border-t border-slate-700">
                                 <td className="px-2 py-1">{line.itemName}</td>
                                 <td className="px-2 py-1">{line.batch}</td>
                                 <td className="px-2 py-1">{line.tagNo}</td>

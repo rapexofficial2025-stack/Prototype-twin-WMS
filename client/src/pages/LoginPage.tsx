@@ -28,19 +28,19 @@ export function LoginPage() {
           <form onSubmit={onSubmit} className="mt-8 space-y-4">
             <label className="block">
               <span className="mb-1.5 block text-xs font-medium text-slate-400">Email or Username</span>
-              <div className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2.5 focus-within:border-blue-500">
+              <div className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2.5 focus-within:border-sky-400">
                 <User className="size-4 text-slate-500" />
                 <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" required className="w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500" placeholder="you@antarcticacoldstorage.com" />
               </div>
             </label>
             <label className="block">
               <span className="mb-1.5 block text-xs font-medium text-slate-400">Password</span>
-              <div className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2.5 focus-within:border-blue-500">
+              <div className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2.5 focus-within:border-sky-400">
                 <Lock className="size-4 text-slate-500" />
                 <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" required className="w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500" placeholder="••••••••" />
               </div>
             </label>
-            <button type="submit" className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700">
+            <button type="submit" className="flex w-full items-center justify-center gap-2 rounded-lg bg-sky-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sky-600">
               <LogIn className="size-4" />Sign In
             </button>
           </form>

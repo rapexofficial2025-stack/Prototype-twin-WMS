@@ -48,12 +48,12 @@ export function WithdrawStockPage() {
         <Link to="/outbound" className="icon-button"><ArrowLeft className="size-4" /></Link>
         <div><p className="eyebrow">Storage</p><h1 className="page-title">Withdraw Stock</h1></div>
       </div>
-      <p className="mt-2 text-sm text-slate-500">Search for an in-storage pallet by item, room, batch, or tag — results are FEFO-sorted (soonest expiration first).</p>
+      <p className="mt-2 text-sm text-slate-400">Search for an in-storage pallet by item, room, batch, or tag — results are FEFO-sorted (soonest expiration first).</p>
 
       <Card className="mt-6 p-5">
         <div className="flex flex-wrap gap-3">
           <div className="relative flex-1 min-w-64">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" />
             <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search item, batch, or tag no…" className="input pl-9" />
           </div>
           <select value={room} onChange={(e) => setRoom(e.target.value === 'all' ? 'all' : Number(e.target.value))} className="input w-auto">
@@ -63,13 +63,13 @@ export function WithdrawStockPage() {
         </div>
 
         <table className="mt-4 w-full text-left text-sm">
-          <thead className="text-xs uppercase tracking-wide text-slate-500">
+          <thead className="text-xs uppercase tracking-wide text-slate-400">
             <tr><th className="px-2 py-2">Item</th><th className="px-2 py-2">Batch</th><th className="px-2 py-2">Tag No.</th><th className="px-2 py-2">Location</th><th className="px-2 py-2">Expiration</th><th className="px-2 py-2 text-right">Available</th></tr>
           </thead>
           <tbody>
-            {results.length === 0 && <tr><td colSpan={6} className="px-2 py-6 text-center text-slate-400">No matching in-storage pallets.</td></tr>}
+            {results.length === 0 && <tr><td colSpan={6} className="px-2 py-6 text-center text-slate-500">No matching in-storage pallets.</td></tr>}
             {results.map((tag) => (
-              <tr key={tag.tagNo} onClick={() => selectTag(tag)} className={`cursor-pointer border-t border-slate-100 hover:bg-slate-50 ${selected?.tagNo === tag.tagNo ? 'bg-blue-50' : ''}`}>
+              <tr key={tag.tagNo} onClick={() => selectTag(tag)} className={`cursor-pointer border-t border-slate-700 hover:bg-slate-700 ${selected?.tagNo === tag.tagNo ? 'bg-sky-500/15' : ''}`}>
                 <td className="px-2 py-2">{tag.itemName}</td><td className="px-2 py-2">{tag.batch}</td><td className="px-2 py-2">{tag.tagNo}</td>
                 <td className="px-2 py-2">{tag.location}</td><td className="px-2 py-2">{tag.expirationDate}</td><td className="px-2 py-2 text-right">{tag.quantity}</td>
               </tr>
@@ -78,15 +78,15 @@ export function WithdrawStockPage() {
         </table>
 
         {selected && (
-          <div className="mt-4 flex flex-wrap items-end gap-3 rounded-lg border border-blue-200 bg-blue-50 p-4">
-            <div className="text-sm"><p className="font-medium text-slate-900">{selected.itemName} · {selected.tagNo}</p><p className="text-slate-500">{selected.location} — {selected.quantity} available</p></div>
-            <label className="text-xs font-medium text-slate-500">Quantity to withdraw
+          <div className="mt-4 flex flex-wrap items-end gap-3 rounded-lg border border-sky-500/40 bg-sky-500/15 p-4">
+            <div className="text-sm"><p className="font-medium text-slate-50">{selected.itemName} · {selected.tagNo}</p><p className="text-slate-400">{selected.location} — {selected.quantity} available</p></div>
+            <label className="text-xs font-medium text-slate-400">Quantity to withdraw
               <input type="number" min="1" max={selected.quantity} value={quantity} onChange={(e) => setQuantity(e.target.value)} className="input mt-1 w-32" />
             </label>
-            <button onClick={confirmWithdrawal} className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
+            <button onClick={confirmWithdrawal} className="flex items-center gap-2 rounded-lg bg-sky-500 px-4 py-2 text-sm font-medium text-white hover:bg-sky-600">
               <PackageMinus className="size-4" />Confirm Withdrawal
             </button>
-            <button onClick={() => setSelected(null)} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-white">Cancel</button>
+            <button onClick={() => setSelected(null)} className="rounded-lg border border-slate-600 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-700">Cancel</button>
           </div>
         )}
       </Card>
@@ -94,16 +94,16 @@ export function WithdrawStockPage() {
       {withdrawn.length > 0 && (
         <Card className="mt-5 overflow-hidden">
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+            <thead className="bg-slate-900 text-xs uppercase tracking-wide text-slate-400">
               <tr><th className="px-4 py-3">Item</th><th className="px-4 py-3">Tag No.</th><th className="px-4 py-3">Location</th><th className="px-4 py-3 text-right">Qty Withdrawn</th><th className="w-10 px-2 py-3" /></tr>
             </thead>
             <tbody>
               {withdrawn.map((line) => (
-                <tr key={line.id} className="border-t border-slate-100">
+                <tr key={line.id} className="border-t border-slate-700">
                   <td className="px-4 py-3">{line.tag.itemName}</td><td className="px-4 py-3">{line.tag.tagNo}</td><td className="px-4 py-3">{line.tag.location}</td>
                   <td className="px-4 py-3 text-right">{line.quantity}</td>
                   <td className="px-2 py-3 text-center">
-                    <button onClick={() => undoWithdrawal(line)} title="Undo this withdrawal" className="mx-auto grid size-5 place-items-center rounded-full bg-red-100 text-red-600 hover:bg-red-200">
+                    <button onClick={() => undoWithdrawal(line)} title="Undo this withdrawal" className="mx-auto grid size-5 place-items-center rounded-full bg-red-500/20 text-red-400 hover:bg-red-500/30">
                       <X className="size-3" />
                     </button>
                   </td>

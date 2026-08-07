@@ -77,7 +77,7 @@ export function AddStockPage() {
           <h1 className="page-title">Add Stock — Stock Acceptance</h1>
         </div>
       </div>
-      <p className="mt-2 text-sm text-slate-500">Fill in one pallet, click Add — item details repeat for the next pallet, only the location resets.</p>
+      <p className="mt-2 text-sm text-slate-400">Fill in one pallet, click Add — item details repeat for the next pallet, only the location resets.</p>
 
       <Card className="mt-6 p-5">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -95,19 +95,19 @@ export function AddStockPage() {
           </Field>
         </div>
         <div className="mt-4 flex items-center gap-2">
-          <button onClick={submit} disabled={!isValid} className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-40">
+          <button onClick={submit} disabled={!isValid} className="flex items-center gap-2 rounded-lg bg-sky-500 px-4 py-2 text-sm font-medium text-white hover:bg-sky-600 disabled:cursor-not-allowed disabled:opacity-40">
             <Plus className="size-4" />{editingId ? 'Update Pallet' : 'Add Pallet'}
           </button>
-          <button onClick={resetDraft} className="flex items-center gap-2 rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+          <button onClick={resetDraft} className="flex items-center gap-2 rounded-lg border border-slate-600 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-700">
             <RotateCcw className="size-4" />{editingId ? 'Cancel edit' : 'Reset'}
           </button>
-          {editingId && <span className="text-xs font-medium text-amber-600">Editing existing pallet — Update will replace it in place.</span>}
+          {editingId && <span className="text-xs font-medium text-amber-400">Editing existing pallet — Update will replace it in place.</span>}
         </div>
       </Card>
 
       <Card className="mt-5 overflow-hidden">
         <table className="w-full text-left text-sm">
-          <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+          <thead className="bg-slate-900 text-xs uppercase tracking-wide text-slate-400">
             <tr>
               <th className="px-4 py-3">Item</th><th className="px-4 py-3">Batch</th><th className="px-4 py-3">Tag No.</th>
               <th className="px-4 py-3">Room</th><th className="px-4 py-3">Location</th><th className="px-4 py-3 text-right">Qty</th>
@@ -115,9 +115,9 @@ export function AddStockPage() {
             </tr>
           </thead>
           <tbody>
-            {lines.length === 0 && <tr><td colSpan={8} className="px-4 py-8 text-center text-sm text-slate-400">No pallets added yet.</td></tr>}
+            {lines.length === 0 && <tr><td colSpan={8} className="px-4 py-8 text-center text-sm text-slate-500">No pallets added yet.</td></tr>}
             {lines.map((line) => (
-              <tr key={line.id} className={`cursor-pointer border-t border-slate-100 hover:bg-slate-50 ${editingId === line.id ? 'bg-blue-50' : ''}`}>
+              <tr key={line.id} className={`cursor-pointer border-t border-slate-700 hover:bg-slate-700 ${editingId === line.id ? 'bg-sky-500/15' : ''}`}>
                 <td className="px-4 py-3" onClick={() => editLine(line)}>{line.itemName}</td>
                 <td className="px-4 py-3" onClick={() => editLine(line)}>{line.batch}</td>
                 <td className="px-4 py-3" onClick={() => editLine(line)}>{line.tagNo}</td>
@@ -126,14 +126,14 @@ export function AddStockPage() {
                 <td className="px-4 py-3 text-right" onClick={() => editLine(line)}>{line.quantity}</td>
                 <td className="px-4 py-3 text-right" onClick={() => editLine(line)}>{line.totalWeight} kg</td>
                 <td className="px-2 py-3 text-center">
-                  <button onClick={(e) => { e.stopPropagation(); deleteLine(line.id) }} title="Delete this pallet" className="mx-auto grid size-5 place-items-center rounded-full bg-red-100 text-red-600 hover:bg-red-200">
+                  <button onClick={(e) => { e.stopPropagation(); deleteLine(line.id) }} title="Delete this pallet" className="mx-auto grid size-5 place-items-center rounded-full bg-red-500/20 text-red-400 hover:bg-red-500/30">
                     <X className="size-3" />
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
-          {lines.length > 0 && <tfoot className="border-t border-slate-200 bg-slate-50 text-sm font-medium text-slate-700">
+          {lines.length > 0 && <tfoot className="border-t border-slate-700 bg-slate-900 text-sm font-medium text-slate-200">
             <tr><td className="px-4 py-3" colSpan={5}>Total: {totalPallets} pallet{totalPallets === 1 ? '' : 's'}</td><td className="px-4 py-3 text-right">{totalQuantity.toLocaleString()}</td><td className="px-4 py-3 text-right">{totalWeight.toLocaleString()} kg</td><td /></tr>
           </tfoot>}
         </table>
@@ -143,5 +143,5 @@ export function AddStockPage() {
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return <label className="block text-xs font-medium text-slate-500">{label}<div className="mt-1">{children}</div></label>
+  return <label className="block text-xs font-medium text-slate-400">{label}<div className="mt-1">{children}</div></label>
 }

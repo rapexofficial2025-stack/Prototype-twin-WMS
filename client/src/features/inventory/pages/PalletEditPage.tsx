@@ -17,8 +17,8 @@ export function PalletEditPage() {
   if (!tag) {
     return <section>
       <div><p className="eyebrow">Inquiry</p><h1 className="page-title">Pallet not found</h1></div>
-      <Card className="mt-6 p-6 text-sm text-slate-500">No in-storage pallet with tag <b>{tagNo}</b> was found in the ledger.</Card>
-      <Link to="/inventory" className="mt-4 inline-block text-sm text-blue-600 hover:underline">Back to Stock Ledger</Link>
+      <Card className="mt-6 p-6 text-sm text-slate-400">No in-storage pallet with tag <b>{tagNo}</b> was found in the ledger.</Card>
+      <Link to="/inventory" className="mt-4 inline-block text-sm text-sky-400 hover:underline">Back to Stock Ledger</Link>
     </section>
   }
 
@@ -35,7 +35,7 @@ export function PalletEditPage() {
         <Link to="/inventory" className="icon-button"><ArrowLeft className="size-4" /></Link>
         <div><p className="eyebrow">Inquiry</p><h1 className="page-title">Edit Pallet {tag.tagNo}</h1></div>
       </div>
-      <p className="mt-2 text-sm text-slate-500">Saving writes a new Stock Ledger adjustment entry — the original history is never overwritten.</p>
+      <p className="mt-2 text-sm text-slate-400">Saving writes a new Stock Ledger adjustment entry — the original history is never overwritten.</p>
 
       <Card className="mt-6 max-w-lg p-6">
         <dl className="grid grid-cols-2 gap-3 text-sm">
@@ -44,22 +44,22 @@ export function PalletEditPage() {
           <Info label="Expiration Date" value={tag.expirationDate} /><Info label="Avg Weight" value={`${tag.avgWeight} kg`} />
         </dl>
 
-        <label className="mt-5 block text-xs font-medium text-slate-500">Quantity
+        <label className="mt-5 block text-xs font-medium text-slate-400">Quantity
           <input type="number" min="0" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="input mt-1" />
         </label>
-        <label className="mt-3 block text-xs font-medium text-slate-500">Location
+        <label className="mt-3 block text-xs font-medium text-slate-400">Location
           <input value={location} onChange={(e) => setLocation(e.target.value)} className="input mt-1" />
         </label>
 
-        <button onClick={onSave} className="mt-5 flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
+        <button onClick={onSave} className="mt-5 flex items-center gap-2 rounded-lg bg-sky-500 px-4 py-2 text-sm font-medium text-white hover:bg-sky-600">
           <Save className="size-4" />Save Correction
         </button>
-        {saved && <p className="mt-3 text-sm font-medium text-emerald-600">Saved — a new adjustment entry was added to the Stock Ledger.</p>}
+        {saved && <p className="mt-3 text-sm font-medium text-emerald-400">Saved — a new adjustment entry was added to the Stock Ledger.</p>}
       </Card>
     </section>
   )
 }
 
 function Info({ label, value }: { label: string; value: string }) {
-  return <div><dt className="text-xs text-slate-400">{label}</dt><dd className="font-medium text-slate-900">{value}</dd></div>
+  return <div><dt className="text-xs text-slate-500">{label}</dt><dd className="font-medium text-slate-50">{value}</dd></div>
 }

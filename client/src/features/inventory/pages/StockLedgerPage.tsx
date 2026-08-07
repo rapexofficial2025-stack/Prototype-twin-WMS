@@ -3,10 +3,10 @@ import { Card } from '@/components/ui/card'
 import { useLedgerEntries } from '@/features/inventory/services/ledgerStore'
 
 const typeTone: Record<string, string> = {
-  acceptance: 'bg-emerald-50 text-emerald-700',
-  withdrawal: 'bg-red-50 text-red-700',
-  transfer: 'bg-blue-50 text-blue-700',
-  adjustment: 'bg-amber-50 text-amber-700',
+  acceptance: 'bg-emerald-500/15 text-emerald-300',
+  withdrawal: 'bg-red-500/15 text-red-300',
+  transfer: 'bg-sky-500/15 text-sky-300',
+  adjustment: 'bg-amber-500/15 text-amber-300',
 }
 
 export function StockLedgerPage() {
@@ -18,11 +18,11 @@ export function StockLedgerPage() {
       <div>
         <p className="eyebrow">Inquiry</p>
         <h1 className="page-title">Stock Ledger</h1>
-        <p className="mt-2 text-sm text-slate-500">Full transaction history with running balance per item. Click a row to open and correct that pallet.</p>
+        <p className="mt-2 text-sm text-slate-400">Full transaction history with running balance per item. Click a row to open and correct that pallet.</p>
       </div>
       <Card className="mt-7 overflow-x-auto">
         <table className="w-full text-left text-sm">
-          <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+          <thead className="bg-slate-900 text-xs uppercase tracking-wide text-slate-400">
             <tr>
               <th className="px-4 py-3">Date</th>
               <th className="px-4 py-3">Document No.</th>
@@ -37,14 +37,14 @@ export function StockLedgerPage() {
           </thead>
           <tbody>
             {entries.map((entry) => (
-              <tr key={entry.id} onClick={() => navigate(`/inventory/pallet/${entry.tagNo}`)} className="cursor-pointer border-t border-slate-100 hover:bg-slate-50">
+              <tr key={entry.id} onClick={() => navigate(`/inventory/pallet/${entry.tagNo}`)} className="cursor-pointer border-t border-slate-700 hover:bg-slate-700">
                 <td className="px-4 py-3">{entry.date}</td>
-                <td className="px-4 py-3 font-medium text-slate-900">{entry.documentNo}</td>
+                <td className="px-4 py-3 font-medium text-slate-50">{entry.documentNo}</td>
                 <td className="px-4 py-3"><span className={`rounded-full px-2.5 py-1 text-xs font-medium capitalize ${typeTone[entry.type]}`}>{entry.type}</span></td>
                 <td className="px-4 py-3">{entry.itemDescription}</td>
-                <td className="px-4 py-3 text-blue-600 underline-offset-2 hover:underline">{entry.tagNo}</td>
+                <td className="px-4 py-3 text-sky-400 underline-offset-2 hover:underline">{entry.tagNo}</td>
                 <td className="px-4 py-3">{entry.location}</td>
-                <td className={`px-4 py-3 text-right ${entry.quantity < 0 ? 'text-red-600' : 'text-emerald-600'}`}>{entry.quantity > 0 ? '+' : ''}{entry.quantity}</td>
+                <td className={`px-4 py-3 text-right ${entry.quantity < 0 ? 'text-red-400' : 'text-emerald-400'}`}>{entry.quantity > 0 ? '+' : ''}{entry.quantity}</td>
                 <td className="px-4 py-3 text-right">{entry.weight} kg</td>
                 <td className="px-4 py-3 text-right font-medium">{entry.runningBalance}</td>
               </tr>
