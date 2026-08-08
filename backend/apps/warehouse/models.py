@@ -31,9 +31,12 @@ class Location(models.Model):
         unique_together = ('room', 'side', 'column', 'level', 'depth')
         indexes = [models.Index(fields=['room', 'status'])]
 
+    LEVEL_LETTERS = 'ABCDEFG'
+
     @property
     def location_code(self) -> str:
-        return f'RM{self.room.room_number}-CO{self.column}-L{self.level}-D{self.depth}'
+        level_letter = self.LEVEL_LETTERS[self.level] if self.level < len(self.LEVEL_LETTERS) else str(self.level)
+        return f'RM{self.room.room_number}-CO{self.column}-L{level_letter}-D{self.depth + 1}'
 
     def __str__(self):
         return self.location_code

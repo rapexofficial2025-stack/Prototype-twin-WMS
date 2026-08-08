@@ -3,14 +3,16 @@ import { Link } from 'react-router-dom'
 import { ArrowLeft, Plus, RotateCcw, X } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { getVacantLocations } from '@/features/receiving/services/locations.mock'
+import { isBackendConfigured, postReceiveLine } from '@/features/receiving/services/receive.api'
 import type { ReceivingLine } from '@/features/receiving/types'
 
+const CUSTOMER_SUGGESTIONS = ['JB Grocery', "Jenny's Carenderia", 'Antarctica Distributors', 'Coldline Foods']
 const ITEM_SUGGESTIONS = ['Frozen Chicken', 'Ice Cream Tub', 'Frozen Shrimp', 'Beef Cuts']
 const PACKAGING_SUGGESTIONS = ['Box', 'Sack', 'Carton', 'Drum']
 const ROOMS = Array.from({ length: 10 }, (_, i) => i + 1)
 
 const emptyDraft = {
-  itemName: '', batch: '', productionDate: '', expirationDate: '', packaging: 'Box',
+  customerName: '', itemName: '', batch: '', productionDate: '', expirationDate: '', packaging: 'Box',
   quantity: '', avgWeight: '', room: 1, location: '',
 }
 type Draft = typeof emptyDraft
@@ -19,17 +21,41 @@ export function AddStockPage() {
   const [draft, setDraft] = useState<Draft>(emptyDraft)
   const [lines, setLines] = useState<ReceivingLine[]>([])
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const vacantLocations = useMemo(() => getVacantLocations(draft.room), [draft.room])
 
   const update = (patch: Partial<Draft>) => setDraft((current) => ({ ...current, ...patch }))
 
   const isValid = draft.itemName.trim() !== '' && draft.location.trim() !== '' && Number(draft.quantity) > 0
+    && (!isBackendConfigured || draft.customerName.trim() !== '')
 
-  const submit = () => {
-    if (!isValid) return
+  const submit = async () => {
+    if (!isValid || isSubmitting) return
     const quantity = Number(draft.quantity)
     const avgWeight = Number(draft.avgWeight) || 0
+
+    if (isBackendConfigured && !editingId) {
+      setIsSubmitting(true)
+      setSubmitError(null)
+      try {
+        const line = await postReceiveLine({
+          customerName: draft.customerName, itemName: draft.itemName, batch: draft.batch,
+          productionDate: draft.productionDate, expirationDate: draft.expirationDate, packaging: draft.packaging,
+          quantity, avgWeight, locationCode: draft.location,
+        })
+        setLines((current) => [line, ...current]) // newest appears right below the fill-up box
+        update({ location: '' }) // everything else repeats; only location resets for the next pallet
+      } catch (error) {
+        setSubmitError(error instanceof Error ? error.message : 'Failed to receive stock.')
+      } finally {
+        setIsSubmitting(false)
+      }
+      return
+    }
+
+    // Local-only path: no backend configured, or editing a line already in this session's table.
     const line: ReceivingLine = {
       id: editingId ?? crypto.randomUUID(),
       itemName: draft.itemName, batch: draft.batch, tagNo: editingId ? (lines.find((l) => l.id === editingId)?.tagNo ?? '') : `TAG-${Math.floor(10000 + Math.random() * 89999)}`,
@@ -43,8 +69,8 @@ export function AddStockPage() {
       setEditingId(null)
       setDraft(emptyDraft)
     } else {
-      setLines((current) => [line, ...current]) // newest appears right below the fill-up box
-      update({ location: '' }) // everything else repeats; only location resets for the next pallet
+      setLines((current) => [line, ...current])
+      update({ location: '' })
     }
   }
 
@@ -53,7 +79,7 @@ export function AddStockPage() {
   const editLine = (line: ReceivingLine) => {
     setEditingId(line.id)
     setDraft({
-      itemName: line.itemName, batch: line.batch, productionDate: line.productionDate, expirationDate: line.expirationDate,
+      customerName: '', itemName: line.itemName, batch: line.batch, productionDate: line.productionDate, expirationDate: line.expirationDate,
       packaging: line.packaging, quantity: String(line.quantity), avgWeight: String(line.avgWeight),
       room: Number(line.room.replace(/\D/g, '')) || 1, location: line.location,
     })
@@ -77,10 +103,17 @@ export function AddStockPage() {
           <h1 className="page-title">Add Stock — Stock Acceptance</h1>
         </div>
       </div>
-      <p className="mt-2 text-sm text-slate-400">Fill in one pallet, click Add — item details repeat for the next pallet, only the location resets.</p>
+      <div className="mt-2 flex flex-wrap items-center gap-3">
+        <p className="text-sm text-slate-400">Fill in one pallet, click Add — item details repeat for the next pallet, only the location resets.</p>
+        <span className={`flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${isBackendConfigured ? 'bg-emerald-500/15 text-emerald-300' : 'bg-slate-700 text-slate-300'}`}>
+          <span className={`size-1.5 rounded-full ${isBackendConfigured ? 'bg-emerald-400' : 'bg-slate-500'}`} />
+          {isBackendConfigured ? 'Connected to Django' : 'Local demo mode'}
+        </span>
+      </div>
 
       <Card className="mt-6 p-5">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Field label={`Customer${isBackendConfigured ? '' : ' (optional in demo mode)'}`}><input list="customer-suggestions" value={draft.customerName} onChange={(e) => update({ customerName: e.target.value })} className="input" placeholder="e.g. Jenny's Carenderia" /><datalist id="customer-suggestions">{CUSTOMER_SUGGESTIONS.map((c) => <option key={c} value={c} />)}</datalist></Field>
           <Field label="Item Name"><input list="item-suggestions" value={draft.itemName} onChange={(e) => update({ itemName: e.target.value })} className="input" placeholder="e.g. Frozen Chicken" /><datalist id="item-suggestions">{ITEM_SUGGESTIONS.map((i) => <option key={i} value={i} />)}</datalist></Field>
           <Field label="Batch No."><input value={draft.batch} onChange={(e) => update({ batch: e.target.value })} className="input" placeholder="B2601" /></Field>
           <Field label="Production Date"><input type="date" value={draft.productionDate} onChange={(e) => update({ productionDate: e.target.value })} className="input" /></Field>
@@ -94,14 +127,15 @@ export function AddStockPage() {
             <datalist id="vacant-locations">{vacantLocations.map((code) => <option key={code} value={code} />)}</datalist>
           </Field>
         </div>
-        <div className="mt-4 flex items-center gap-2">
-          <button onClick={submit} disabled={!isValid} className="flex items-center gap-2 rounded-lg bg-sky-500 px-4 py-2 text-sm font-medium text-white hover:bg-sky-600 disabled:cursor-not-allowed disabled:opacity-40">
-            <Plus className="size-4" />{editingId ? 'Update Pallet' : 'Add Pallet'}
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          <button onClick={submit} disabled={!isValid || isSubmitting} className="flex items-center gap-2 rounded-lg bg-sky-500 px-4 py-2 text-sm font-medium text-white hover:bg-sky-600 disabled:cursor-not-allowed disabled:opacity-40">
+            <Plus className="size-4" />{isSubmitting ? 'Saving…' : editingId ? 'Update Pallet' : 'Add Pallet'}
           </button>
           <button onClick={resetDraft} className="flex items-center gap-2 rounded-lg border border-slate-600 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-700">
             <RotateCcw className="size-4" />{editingId ? 'Cancel edit' : 'Reset'}
           </button>
           {editingId && <span className="text-xs font-medium text-amber-400">Editing existing pallet — Update will replace it in place.</span>}
+          {submitError && <span className="text-xs font-medium text-red-400">{submitError}</span>}
         </div>
       </Card>
 
