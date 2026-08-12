@@ -1,4 +1,4 @@
-export type ZoneKind = 'loading-dock' | 'dry-warehouse' | 'cold-storage' | 'blast-freezer' | 'anteroom'
+export type ZoneKind = 'loading-dock' | 'dry-warehouse' | 'cold-storage' | 'blast-freezer' | 'anteroom' | 'chiller-room'
 
 export type ZoneAreaStatus = 'available' | 'active' | 'reserved' | 'blocked'
 
