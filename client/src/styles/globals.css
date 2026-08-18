@@ -3,3 +3,32 @@
 @theme { --font-sans: "Inter", "Segoe UI", sans-serif; }
 @layer base { * { @apply border-slate-700; } body { @apply m-0 bg-slate-950 font-sans text-slate-100 antialiased; } button { @apply cursor-pointer; } }
 @layer components { .page-title { @apply mt-1 text-2xl font-semibold tracking-tight text-slate-50; } .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.16em] text-sky-400; } .icon-button { @apply grid size-10 place-items-center rounded-lg text-slate-500 transition-colors hover:bg-slate-700 hover:text-white; } .control-button { @apply rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-100 outline-none hover:bg-slate-800 focus:border-sky-400; } .input { @apply w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-100 outline-none focus:border-sky-400; } }
+
+@layer components {
+  .login-screen { @apply relative flex min-h-screen items-center justify-end overflow-hidden bg-center bg-no-repeat px-5 py-8 sm:px-10 lg:px-16; background-image: url('/branding/login-screen.png'); background-size: 100% 100%; touch-action: none; overscroll-behavior: none; }
+  .login-overlay { @apply pointer-events-none absolute inset-0 bg-blue-950/10; }
+  .login-card { @apply relative z-10 ml-auto w-full max-w-[490px] rounded-[28px] border-0 bg-white/5 px-7 py-8 text-slate-800 shadow-2xl shadow-blue-950/25 backdrop-blur-xl sm:px-11 sm:py-10 lg:mr-[2%]; }
+  .login-brand { @apply text-center; }
+  .login-eyebrow { @apply text-xs font-bold tracking-[0.24em] text-blue-950/80; }
+  .login-brand h1 { @apply mt-3 text-3xl font-extrabold tracking-tight text-blue-950 sm:text-4xl; }
+  .login-brand h1 span { @apply block text-xl font-semibold tracking-[0.14em] text-blue-800/80 sm:text-2xl; }
+  .login-powered { @apply mt-2 text-sm font-medium tracking-wide text-blue-950/70; }
+  .login-tagline { @apply mx-auto mt-7 max-w-sm text-center text-sm leading-6 text-blue-950/75; }
+  .login-form { @apply mt-7; }
+  .login-form > label { @apply mb-2 mt-5 block text-sm font-semibold text-blue-950; }
+  .login-input-wrap { @apply flex h-14 items-center gap-3 rounded-xl border border-white/80 bg-white/80 px-4 shadow-sm transition focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-200/60; }
+  .login-input-wrap > svg { @apply size-5 shrink-0 text-blue-800/70; }
+  .login-input-wrap input { @apply min-w-0 flex-1 bg-transparent text-sm text-blue-950 outline-none placeholder:text-slate-500; }
+  .login-password-toggle { @apply rounded-md p-1 text-blue-800/70 hover:bg-blue-100; }
+  .login-password-toggle svg { @apply size-5; }
+  .login-forgot { @apply mt-2 text-sm font-semibold text-blue-900 underline-offset-2 hover:underline; }
+  .login-error { @apply mt-4 rounded-lg border border-red-200 bg-red-50/80 px-3 py-2 text-sm text-red-700; }
+  .login-submit { @apply mt-6 flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-blue-950 text-base font-semibold text-white shadow-lg shadow-blue-950/25 transition hover:bg-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-300; }
+  .login-submit svg { @apply size-5; }
+  .login-signup { @apply mt-3 h-12 w-full rounded-xl border border-blue-900/30 bg-white/35 text-sm font-semibold text-blue-950 transition hover:bg-white/65; }
+  .login-remember { @apply mt-5 flex items-center justify-center gap-2 text-sm text-blue-950/80; }
+  .login-remember input { @apply size-4 accent-blue-900; }
+  .login-privacy { @apply mt-7 border-t border-white/60 pt-5 text-center text-xs leading-5 text-blue-950/70; }
+  .login-privacy p { @apply font-bold uppercase tracking-[0.18em] text-blue-950; }
+  .login-privacy span { @apply mt-1 block; }
+}

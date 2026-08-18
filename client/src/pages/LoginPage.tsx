@@ -1,52 +1,59 @@
-import { useState } from 'react'
+import { Eye, EyeOff, LockKeyhole, LogIn, UserRound } from 'lucide-react'
+import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Lock, LogIn, User } from 'lucide-react'
-import { useBranding } from '@/lib/branding'
+
+const DEMO_USERNAME = 'Admin_test'
+const DEMO_PASSWORD = 'Admin123'
 
 export function LoginPage() {
-  const { logo, title, subtitle } = useBranding()
   const navigate = useNavigate()
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [keepSignedIn, setKeepSignedIn] = useState(true)
+  const [error, setError] = useState('')
 
-  const onSubmit = (event: React.FormEvent) => {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    navigate('/')
+    if (username.trim() !== DEMO_USERNAME || password !== DEMO_PASSWORD) {
+      setError('Please check your username and password.')
+      return
+    }
+    const storage = keepSignedIn ? localStorage : sessionStorage
+    storage.setItem('frost-wms-auth', 'true')
+    navigate('/', { replace: true })
   }
 
   return (
-    <div className="relative min-h-screen bg-slate-950">
-      <img src="/branding/facility.jpg" alt="" className="absolute inset-0 size-full object-cover opacity-30" />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/80 to-slate-950" />
-      <div className="relative flex min-h-screen items-center justify-center px-4">
-        <div className="w-full max-w-sm rounded-2xl border border-slate-800 bg-slate-900/90 p-8 shadow-2xl backdrop-blur">
-          <div className="flex flex-col items-center text-center">
-            <img src={logo} alt="" className="size-16 rounded-xl bg-white object-contain p-1.5" />
-            <h1 className="mt-4 text-lg font-semibold text-white">{title}</h1>
-            <p className="mt-1 text-xs text-slate-400">{subtitle}</p>
-          </div>
-          <form onSubmit={onSubmit} className="mt-8 space-y-4">
-            <label className="block">
-              <span className="mb-1.5 block text-xs font-medium text-slate-400">Email or Username</span>
-              <div className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2.5 focus-within:border-sky-400">
-                <User className="size-4 text-slate-500" />
-                <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" required className="w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500" placeholder="you@antarcticacoldstorage.com" />
-              </div>
-            </label>
-            <label className="block">
-              <span className="mb-1.5 block text-xs font-medium text-slate-400">Password</span>
-              <div className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2.5 focus-within:border-sky-400">
-                <Lock className="size-4 text-slate-500" />
-                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" required className="w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500" placeholder="••••••••" />
-              </div>
-            </label>
-            <button type="submit" className="flex w-full items-center justify-center gap-2 rounded-lg bg-sky-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sky-600">
-              <LogIn className="size-4" />Sign In
-            </button>
-          </form>
-          <p className="mt-6 text-center text-[11px] text-slate-500">Prototype login — not yet connected to real authentication.</p>
+    <main className="login-screen">
+      <div className="login-overlay" />
+      <section className="login-card" aria-label="FROST WMS sign in">
+        <div className="login-brand">
+          <p className="login-eyebrow">WELCOME TO ANTARCTICA</p>
+          <h1>TWIN WMS <span>BETA v1.0</span></h1>
+          <p className="login-powered">powered by Rapex Technology</p>
         </div>
-      </div>
-    </div>
+        <p className="login-tagline">See every pallet, protect every shipment, move frozen goods smarter.</p>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <label htmlFor="username">Username :</label>
+          <div className="login-input-wrap">
+            <UserRound aria-hidden="true" />
+            <input id="username" autoComplete="username" placeholder="Enter your username" value={username} onChange={(event) => { setUsername(event.target.value); setError('') }} />
+          </div>
+          <label htmlFor="password">Password :</label>
+          <div className="login-input-wrap">
+            <LockKeyhole aria-hidden="true" />
+            <input id="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" placeholder="Enter your password" value={password} onChange={(event) => { setPassword(event.target.value); setError('') }} />
+            <button type="button" className="login-password-toggle" aria-label={showPassword ? 'Hide password' : 'Show password'} onClick={() => setShowPassword((value) => !value)}>{showPassword ? <EyeOff /> : <Eye />}</button>
+          </div>
+          <button type="button" className="login-forgot" onClick={() => setError('Please contact the system administrator to reset your password.')}>Forgot password</button>
+          {error && <p className="login-error" role="alert">{error}</p>}
+          <button className="login-submit" type="submit"><LogIn />Sign in</button>
+          <button className="login-signup" type="button" onClick={() => setError('Account creation is available by administrator approval.')}>Sign Up</button>
+          <label className="login-remember"><input type="checkbox" checked={keepSignedIn} onChange={(event) => setKeepSignedIn(event.target.checked)} />Keep Sign in</label>
+        </form>
+        <div className="login-privacy"><p>Privacy</p><span>This private prototype protects warehouse information and only approved users may sign in.</span></div>
+      </section>
+    </main>
   )
 }
