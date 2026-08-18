@@ -29,6 +29,7 @@ export function LoginPage() {
       <div className="login-overlay" />
       <section className="login-card" aria-label="FROST WMS sign in">
         <div className="login-brand">
+          <img className="login-logo" src="/branding/antarctica-logo.png" alt="Antarctica Cold Storage" />
           <p className="login-eyebrow">WELCOME TO ANTARCTICA</p>
           <h1>TWIN WMS <span>BETA v1.0</span></h1>
           <p className="login-powered">powered by Rapex Technology</p>

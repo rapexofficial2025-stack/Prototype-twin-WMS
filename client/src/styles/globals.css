@@ -5,10 +5,11 @@
 @layer components { .page-title { @apply mt-1 text-2xl font-semibold tracking-tight text-slate-50; } .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.16em] text-sky-400; } .icon-button { @apply grid size-10 place-items-center rounded-lg text-slate-500 transition-colors hover:bg-slate-700 hover:text-white; } .control-button { @apply rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-100 outline-none hover:bg-slate-800 focus:border-sky-400; } .input { @apply w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-100 outline-none focus:border-sky-400; } }
 
 @layer components {
-  .login-screen { @apply relative flex min-h-screen items-center justify-end overflow-hidden bg-center bg-no-repeat px-5 py-8 sm:px-10 lg:px-16; background-image: url('/branding/login-screen.png'); background-size: 100% 100%; touch-action: none; overscroll-behavior: none; }
+  .login-screen { @apply relative flex min-h-screen items-center justify-end overflow-hidden bg-center bg-no-repeat px-5 py-8 sm:px-10 lg:px-16; background-image: url('/branding/warehouse-aerial.jpg'); background-size: 100% 100%; touch-action: none; overscroll-behavior: none; }
   .login-overlay { @apply pointer-events-none absolute inset-0 bg-blue-950/10; }
   .login-card { @apply relative z-10 ml-auto w-full max-w-[490px] rounded-[28px] border-0 bg-white/5 px-7 py-8 text-slate-800 shadow-2xl shadow-blue-950/25 backdrop-blur-xl sm:px-11 sm:py-10 lg:mr-[2%]; }
   .login-brand { @apply text-center; }
+  .login-logo { @apply mx-auto mb-4 block h-28 w-auto max-w-full object-contain mix-blend-multiply; }
   .login-eyebrow { @apply text-xs font-bold tracking-[0.24em] text-blue-950/80; }
   .login-brand h1 { @apply mt-3 text-3xl font-extrabold tracking-tight text-blue-950 sm:text-4xl; }
   .login-brand h1 span { @apply block text-xl font-semibold tracking-[0.14em] text-blue-800/80 sm:text-2xl; }
