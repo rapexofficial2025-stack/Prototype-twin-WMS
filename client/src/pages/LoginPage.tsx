@@ -21,6 +21,7 @@ export function LoginPage() {
     }
     const storage = keepSignedIn ? localStorage : sessionStorage
     storage.setItem('frost-wms-auth', 'true')
+    storage.setItem('frost-wms-user', JSON.stringify({ name: DEMO_USERNAME, initials: 'AT', role: 'Administrator' }))
     navigate('/', { replace: true })
   }
 
