@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.warehouse.models import Location, Room
+from apps.warehouse.models import Asset, Dock, Location, Room, WarehouseArea
 
 
 class LocationTwinSerializer(serializers.ModelSerializer):
@@ -52,7 +52,7 @@ class RoomTwinSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Room
-        fields = ['id', 'room_number', 'room_name', 'room_type', 'target_temp_c', 'columns_left', 'columns_right', 'levels', 'depth', 'capacity_locations', 'locations', 'occupancy']
+        fields = ['id', 'room_number', 'room_code', 'room_name', 'room_type', 'target_temp_c', 'columns_left', 'columns_right', 'levels', 'depth', 'capacity_locations', 'locations', 'occupancy']
 
     def get_occupancy(self, obj: Room):
         total = obj.locations.count()
@@ -67,3 +67,46 @@ class RoomTwinSerializer(serializers.ModelSerializer):
             'available': total - occupied - reserved - blocked,
             'occupancyPct': round((occupied / total) * 100, 1) if total else 0,
         }
+
+
+class WarehouseAreaSerializer(serializers.ModelSerializer):
+    """Feeds the Warehouse module's Cold Storage / Dry Warehouse / Chiller
+    Room section tabs and their landing-page summary cards."""
+
+    areaCode = serializers.CharField(source='area_code')
+    areaName = serializers.CharField(source='area_name')
+    areaType = serializers.CharField(source='area_type')
+    targetTempC = serializers.DecimalField(source='target_temp_c', max_digits=5, decimal_places=1, read_only=True, allow_null=True)
+    available = serializers.IntegerField(read_only=True)
+    utilizationPct = serializers.FloatField(source='utilization_pct', read_only=True)
+    roomNumber = serializers.IntegerField(source='room.room_number', read_only=True, allow_null=True, default=None)
+
+    class Meta:
+        model = WarehouseArea
+        fields = ['id', 'areaCode', 'areaName', 'areaType', 'floor', 'capacity', 'occupied', 'available', 'utilizationPct', 'targetTempC', 'status', 'roomNumber']
+
+
+class DockSerializer(serializers.ModelSerializer):
+    """Feeds the Warehouse module's Loading Area section."""
+
+    dockCode = serializers.CharField(source='dock_code')
+    activityStartedAt = serializers.DateTimeField(source='activity_started_at', read_only=True, allow_null=True)
+
+    class Meta:
+        model = Dock
+        fields = ['id', 'dockCode', 'status', 'activity', 'reference', 'activityStartedAt']
+
+
+class AssetSerializer(serializers.ModelSerializer):
+    """Feeds the Warehouse module's Assets section."""
+
+    assetCode = serializers.CharField(source='asset_code')
+    assetType = serializers.CharField(source='asset_type')
+    serialNumber = serializers.CharField(source='serial_number', required=False, allow_blank=True)
+    assignedUser = serializers.CharField(source='assigned_user.get_username', read_only=True, default=None)
+    currentLocation = serializers.CharField(source='current_location.area_code', read_only=True, default=None)
+    maintenanceDate = serializers.DateField(source='maintenance_date', required=False, allow_null=True)
+
+    class Meta:
+        model = Asset
+        fields = ['id', 'assetCode', 'assetType', 'brand', 'model', 'serialNumber', 'status', 'assignedUser', 'currentLocation', 'maintenanceDate', 'notes']
