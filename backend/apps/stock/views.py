@@ -13,8 +13,7 @@ from apps.stock.models import Batch, StockLedger, Tag
 from apps.stock.serializers import LedgerEntrySerializer, ReceiveLineResponseSerializer, ReceiveLineSerializer, TagScanSerializer, TagScanUpdateSerializer
 from apps.warehouse.models import Location, Room
 
-LEVEL_LETTERS = 'ABCDEFG'
-LOCATION_CODE_RE = re.compile(r'^RM(?P<room>\d+)-CO(?P<column>\d+)-L(?P<level>[A-Za-z])-D(?P<depth>\d+)$')
+LOCATION_CODE_RE = re.compile(r'^RM(?P<room>\d+)-CO(?P<column>\d+)-LA(?P<layer>\d+)$')
 
 
 class StockLedgerListView(ListAPIView):
@@ -38,19 +37,20 @@ class StockLedgerListView(ListAPIView):
 
 
 def _resolve_location(location_code: str) -> Location:
-    """Parses a twin-style code like RM1-CO4-LA-D1 (room/column/level-letter/
-    1-indexed depth) into a Location row, auto-creating the Room/Location if
-    this is the first time stock has ever gone there."""
+    """Parses the FROST location code RM101-CO2-LA4 (room/column/1-indexed
+    layer, where layer combines rack level+depth — see Location.layer) into
+    a Location row, auto-creating the Room/Location if this is the first
+    time stock has ever gone there."""
     match = LOCATION_CODE_RE.match(location_code.strip().upper())
     if not match:
         raise ValueError(f'Unrecognized location code: {location_code}')
     room_number = int(match.group('room'))
     column = int(match.group('column'))
-    level = LEVEL_LETTERS.index(match.group('level'))
-    depth = int(match.group('depth')) - 1
+    layer = int(match.group('layer')) - 1
+    level, depth = divmod(layer, Location.DEPTHS_PER_LEVEL)
     side = 'left' if column <= 15 else 'right'
 
-    room, _ = Room.objects.get_or_create(room_number=room_number, defaults={'room_name': f'Cold Room {room_number:02d}'})
+    room, _ = Room.objects.get_or_create(room_number=room_number, defaults={'room_name': f'Cold Room {room_number:02d}', 'room_code': f'RM{room_number}'})
     location, _ = Location.objects.get_or_create(room=room, side=side, column=column, level=level, depth=depth)
     return location
 

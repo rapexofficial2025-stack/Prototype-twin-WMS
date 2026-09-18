@@ -1,6 +1,12 @@
 from django.contrib import admin
 
-from apps.core.models import Customer, Item
+from apps.core.models import Customer, Item, UserProfile
+
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'role']
+    list_filter = ['role']
 
 
 @admin.register(Customer)
