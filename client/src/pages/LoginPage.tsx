@@ -31,7 +31,7 @@ export function LoginPage() {
       <div className="login-overlay" />
       <section className="login-card" aria-label="FROST WMS sign in">
         <div className="login-brand">
-          <img className="login-logo" src="/branding/demo-logo.svg" alt="DEMO APP Cold Storage" />
+          <img className="login-logo" src={`${import.meta.env.BASE_URL}branding/demo-logo.svg`} alt="DEMO APP Cold Storage" />
           <p className="login-eyebrow">WELCOME TO DEMO APP</p>
           <h1>TWIN WMS <span>BETA v1.0</span></h1>
           <p className="login-powered">powered by Rapex Technology</p>

@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useState, type PropsWithChildren } from 'react'
 
 export const DEFAULT_BRANDING = {
-  logo: '/branding/demo-logo.svg',
+  logo: `${import.meta.env.BASE_URL}branding/demo-logo.svg`,
   title: 'DEMO APP Cold Storage',
   subtitle: 'WMS BETA v1.0 Prototype Inventory System — Powered by RAPEX Technology',
 }
