@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom'
 export function TopBar() {
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
-  const storedUser = localStorage.getItem('frost-wms-user')
+  const storedUser = localStorage.getItem('frost-wms-user') ?? sessionStorage.getItem('frost-wms-user')
   const user = storedUser ? JSON.parse(storedUser) as { name?: string; initials?: string; role?: string } : null
-  const name = user?.name ?? 'Admin_test'
-  const initials = user?.initials ?? 'AT'
+  const name = user?.name ?? 'Demo User'
+  const initials = user?.initials ?? 'DA'
   const role = user?.role ?? 'Administrator'
 
   const logOut = () => {

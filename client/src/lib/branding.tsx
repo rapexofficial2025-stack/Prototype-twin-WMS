@@ -1,13 +1,13 @@
 import { createContext, useCallback, useContext, useState, type PropsWithChildren } from 'react'
 
 export const DEFAULT_BRANDING = {
-  logo: '/branding/logo.png',
-  title: 'ANTARCTICA Cold Storage',
+  logo: '/branding/demo-logo.svg',
+  title: 'DEMO APP Cold Storage',
   subtitle: 'WMS BETA v1.0 Prototype Inventory System — Powered by RAPEX Technology',
 }
 
 type Branding = typeof DEFAULT_BRANDING
-const STORAGE_KEY = 'frost-wms:branding'
+const STORAGE_KEY = 'frost-wms:branding:v2'
 
 function loadBranding(): Branding {
   try {

@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { HashRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { EnterpriseLayout } from '@/layouts/EnterpriseLayout'
 import { DashboardPage } from '@/features/dashboard'
 import { RoomDetailPage, WarehousePage } from '@/features/warehouse'
@@ -15,9 +15,17 @@ const LoginPage = lazy(async () => ({ default: (await import('@/pages/LoginPage'
 
 const placeholders = ['qrcenter', 'users']
 
+// Demo gate: shows the login screen first. It is not real security. The
+// "signed in" flag is just set when the visitor presses Sign in.
+function RequireLogin() {
+  const signedIn = localStorage.getItem('frost-wms-auth') === 'true' || sessionStorage.getItem('frost-wms-auth') === 'true'
+  return signedIn ? <Outlet /> : <Navigate to="/login" replace />
+}
+
 export function AppRouter() {
   return <HashRouter><Routes>
     <Route path="login" element={<Suspense fallback={null}><LoginPage /></Suspense>} />
+    <Route element={<RequireLogin />}>
     <Route element={<EnterpriseLayout />}>
       <Route index element={<DashboardPage />} />
       <Route path="warehouse" element={<WarehousePage />} />
@@ -35,6 +43,7 @@ export function AppRouter() {
       <Route path="reports" element={<StockAgeingPage />} />
       <Route path="settings" element={<SettingsPage />} />
       {placeholders.map((feature) => <Route key={feature} path={feature} element={<FeaturePlaceholderPage feature={feature} />} />)}
+    </Route>
     </Route>
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes></HashRouter>

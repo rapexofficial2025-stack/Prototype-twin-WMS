@@ -1,6 +1,6 @@
 # Frost WMS — Database Schema & Module Feature Spec
 
-Source: legacy Antarctica Cold Storage WMS screenshots/spec, adapted for Frost WMS.
+Source: legacy DEMO APP Cold Storage WMS screenshots/spec, adapted for Frost WMS.
 3D Digital Twin replaces the old 2D Storage Status map.
 
 **Stack (no Xano):**

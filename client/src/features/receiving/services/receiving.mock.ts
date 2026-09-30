@@ -25,7 +25,7 @@ export const receivingDocs: ReceivingDoc[] = Array.from({ length: 8 }, (_, index
     slipNumber: `SLP-${1000 + index}`,
     referenceNo: `REF-${2000 + index}`,
     customerNo: `CUST-${100 + (index % 5)}`,
-    customerName: ['JB Grocery', "Jenny's Carenderia", 'Antarctica Distributors', 'Coldline Foods', 'North Bay Traders'][index % 5],
+    customerName: ['JB Grocery', "Jenny's Carenderia", 'DEMO APP Distributors', 'Coldline Foods', 'North Bay Traders'][index % 5],
     containerNo: `CONT-${300 + index}`,
     containerSize: index % 2 === 0 ? "40'" : "20'",
     dateTimeFrom: '2026-08-01T08:00',

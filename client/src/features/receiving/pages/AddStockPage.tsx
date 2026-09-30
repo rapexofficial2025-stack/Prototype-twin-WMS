@@ -6,7 +6,7 @@ import { getVacantLocations } from '@/features/receiving/services/locations.mock
 import { isBackendConfigured, postReceiveLine } from '@/features/receiving/services/receive.api'
 import type { ReceivingLine } from '@/features/receiving/types'
 
-const CUSTOMER_SUGGESTIONS = ['JB Grocery', "Jenny's Carenderia", 'Antarctica Distributors', 'Coldline Foods']
+const CUSTOMER_SUGGESTIONS = ['JB Grocery', "Jenny's Carenderia", 'DEMO APP Distributors', 'Coldline Foods']
 const ITEM_SUGGESTIONS = ['Frozen Chicken', 'Ice Cream Tub', 'Frozen Shrimp', 'Beef Cuts']
 const PACKAGING_SUGGESTIONS = ['Box', 'Sack', 'Carton', 'Drum']
 const ROOMS = Array.from({ length: 10 }, (_, i) => i + 1)
