@@ -25,7 +25,7 @@ export const withdrawalDocs: WithdrawalDoc[] = Array.from({ length: 8 }, (_, ind
     withdrawalNo: `OUT-${1000 + index}`,
     referenceNo: `REF-${3000 + index}`,
     customerNo: `CUST-${100 + (index % 5)}`,
-    customerName: ['JB Grocery', "Jenny's Carenderia", 'Antarctica Distributors', 'Coldline Foods', 'North Bay Traders'][index % 5],
+    customerName: ['JB Grocery', "Jenny's Carenderia", 'DEMO APP Distributors', 'Coldline Foods', 'North Bay Traders'][index % 5],
     plateNumber: `NGP-${100 + index}`,
     dateTime: '2026-08-02T09:00',
     status: (['draft', 'saved', 'posted'] as const)[index % 3],

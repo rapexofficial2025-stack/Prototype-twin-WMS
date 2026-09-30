@@ -3,7 +3,7 @@ import type { AdjustmentDoc, LedgerEntry } from '@/features/inventory/types'
 export const adjustmentDocs: AdjustmentDoc[] = Array.from({ length: 6 }, (_, index) => ({
   id: `ADJ-${index + 1}`,
   reference: `ADJ-${5000 + index}`,
-  customerName: ['JB Grocery', "Jenny's Carenderia", 'Antarctica Distributors'][index % 3],
+  customerName: ['JB Grocery', "Jenny's Carenderia", 'DEMO APP Distributors'][index % 3],
   reason: (['damaged', 'missing', 'recount', 'wrong_encoding', 'weight_correction'] as const)[index % 5],
   date: '2026-08-04',
   itemName: ['Frozen Chicken', 'Ice Cream Tub', 'Frozen Shrimp'][index % 3],
@@ -33,6 +33,6 @@ export const ledgerEntries: LedgerEntry[] = Array.from({ length: 12 }, (_, index
     runningBalance: 200 + index * 15 + quantity,
     productionDate: '2026-06-01',
     expirationDate: '2027-06-01',
-    customerName: ['JB Grocery', "Jenny's Carenderia", 'Antarctica Distributors'][index % 3],
+    customerName: ['JB Grocery', "Jenny's Carenderia", 'DEMO APP Distributors'][index % 3],
   }
 })

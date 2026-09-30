@@ -48,7 +48,7 @@ export function SettingsPage() {
         </div>
 
         <h2 className="mt-6 text-sm font-semibold text-slate-50">App Title</h2>
-        <input value={titleDraft} onChange={(e) => setTitleDraft(e.target.value)} className="mt-2 w-full rounded-lg border border-slate-600 px-3 py-2 text-sm outline-none focus:border-sky-400" placeholder="ANTARCTICA Cold Storage" />
+        <input value={titleDraft} onChange={(e) => setTitleDraft(e.target.value)} className="mt-2 w-full rounded-lg border border-slate-600 px-3 py-2 text-sm outline-none focus:border-sky-400" placeholder="DEMO APP Cold Storage" />
 
         <h2 className="mt-4 text-sm font-semibold text-slate-50">Subtitle</h2>
         <input value={subtitleDraft} onChange={(e) => setSubtitleDraft(e.target.value)} className="mt-2 w-full rounded-lg border border-slate-600 px-3 py-2 text-sm outline-none focus:border-sky-400" placeholder="WMS BETA v1.0 Prototype Inventory System" />

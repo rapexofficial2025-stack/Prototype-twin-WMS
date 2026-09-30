@@ -3,7 +3,7 @@ import type { TransferDoc } from '@/features/putaway/types'
 export const transferDocs: TransferDoc[] = Array.from({ length: 6 }, (_, index) => ({
   id: `TRF-${index + 1}`,
   transferNo: `TRF-${4000 + index}`,
-  customerName: ['JB Grocery', "Jenny's Carenderia", 'Antarctica Distributors'][index % 3],
+  customerName: ['JB Grocery', "Jenny's Carenderia", 'DEMO APP Distributors'][index % 3],
   date: '2026-08-03',
   status: (['draft', 'saved', 'posted'] as const)[index % 3],
   lines: Array.from({ length: 1 + (index % 2) }, (_, li) => ({
